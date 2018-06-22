@@ -1,0 +1,145 @@
+button{
+	cursor: pointer;
+	outline: none;
+	border:none;
+}
+/* style bubbles */
+.bubble, .bubble-typing {
+	color: #212121;
+	background: #FFFFFF;
+	padding: 8px 16px;
+	border-radius: 5px 15px 15px 15px;
+	font-weight: 400;
+	text-transform: none;
+	text-align: left;
+	font-size: 16px;
+	letter-spacing: .5px;
+	margin: 0 0 2px 0;
+	max-width: 85%;
+	float: none;
+	clear: both;
+	line-height: 1.5em;
+	word-break: break-word;
+	transform-origin: left top;
+	transition: all 200ms;
+}
+.ElicitSlot{
+	background: rgba(65,105,225, 0.84) !important;
+	color: #ffffff !important;
+}
+.bubble .bubble-content {
+	width:auto;
+	display:inline-block;
+	transition: opacity 150ms;
+}
+.bubble-content p{
+	margin:0;
+	padding:0;
+	display:inline-block;
+	width:auto;
+}
+.bubble-content a{
+    text-decoration:underline;
+    color:#0072c6;
+    cursor:pointer;
+}
+.bubble-content a:hover{
+    color:#e75946;
+}
+.bubble:not(.say) .bubble-content {
+	opacity: 0;
+}
+.bubble-typing.imagine, .bubble.imagine {
+	transform: scale(0);
+	transition: all 200ms, height 200ms 1s, padding 200ms 1s;
+}
+.bubble.imagine {
+	margin: 0;
+	height: 0;
+	padding: 0;
+}
+.chart-say{
+	background: #FFFFFF !important;
+}
+/* style media that's inside bubbles */
+.bubble .bubble-content img {
+	width: calc(100% + 32px);
+	margin: -8px -16px;
+	overflow: hidden;
+	display: block;
+	border-radius: 5px 15px 15px 15px;
+}
+
+.user-response{
+	width: auto;
+	display: block;
+	height:40px;
+	margin: 0 0 20px 100px;
+	animation-delay:3s;
+}
+.user-response .response-btn{
+	padding:8px 16px;
+	color: #0072c6;
+	background: rgba(255, 255, 255, 0.84);
+	border-radius: 5px;
+	margin:0;
+	float: left;
+	cursor: pointer;
+}
+.user-response .response-btn img{
+	width:20px;
+	height: 20px;
+	margin-right: 8px;
+	vertical-align: sub;
+}
+.user-response .response-btn:hover{
+	background: rgba(255, 255, 255, 0.9);
+}
+.user-response .good-btn{
+	margin-right: 10px;
+}
+.suggest-box-outside{
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.1);
+	z-index: 2;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+.suggest-box-outside .suggest-box{
+	width: 290px;
+	height: auto;
+	padding:30px 50px;
+	background: rgba(255, 255, 255,0.8);
+	z-index: 3;
+	position: fixed;
+	top: 150px;
+	left: 600px;
+	border-radius: 10px;
+}
+.suggest-box-outside .suggest-box .title{
+	font-size: 28px;
+	margin:0 0 10px 0;
+}
+.suggest-box-outside .suggest-box .suggest-content{
+	width: 290px;
+	height: 330px;
+	resize: none;
+	background: rgba(255, 255, 255, 0.85);
+	outline: none;
+	font-size: 14px;
+}
+.suggest-box-outside .suggest-box button{
+	width: 85px;
+	height: 32px;
+	line-height: 32px;
+	background: #0072c6;
+	color: #ffffff;
+	margin:15px 0 0 40px;
+	float: left;
+}
+.suggest-box-outside .suggest-box button:hover{
+	background: #0266ad;
+}

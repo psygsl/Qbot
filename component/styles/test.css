@@ -1,0 +1,119 @@
+/* optional page styles */
+a{text-decoration:none;}
+h1 { 
+	text-align: center;
+	font-weight: 1100;
+	font-size: 4em;
+	margin: .5em auto 0.15em;
+	}
+#logo{ float:right;}
+.logo-img{margin:5px 0 0 0;height:56px;}
+.quality-chat{float:right;margin:0 30px 0 0;}
+.quality-chat a{color:#333;}
+.quality-chat a:hover{color:#e75946;}
+.bg {           
+
+ width: 751px;
+            height: 100px;
+            background-image: url('../../images/concert_03.png');
+			    margin-left: 29%;
+    margin-bottom: 25px;
+        }
+        .bg h1{
+          color:#fff;
+          text-align:center;
+          font-size:45px;
+          padding-top:25px;
+        }
+		h1 { text-align: center; }
+		#note { padding: 20px; color: #999; font-size: 14px; line-height: 18px; margin: 0 auto; max-width: 720px; }
+		h2 { text-align: right; }
+		#note { padding: 20px; color: #999; font-size: 14px; line-height: 18px; margin: 0 auto; max-width: 720px; }
+
+/* setup container styles */
+/* from setup.css */
+.bubble-container {
+	background: linear-gradient(145deg, #004d85, #fff);
+	background: url('../../images/scope.jpg');	
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	max-width:100%;
+	opacity:100%;
+	}
+
+/* from says.css */
+.bubble, .bubble-typing {
+	color: #FFFFFF;
+	background: #124191;
+	padding: 8px 16px;
+	border-radius: 5px 15px 15px 15px;
+	box-shadow: 3px 3px 1px grey;     /*   Chris  */
+	font-weight: 400;
+	margin: 10px 0 10px 100px;   /*  let some space to Ziggy so he will be quiet at the left of the bubble  */
+	}
+	/* optional page styles */
+	
+.bubble .ziggy
+ {
+	height: 35px;
+	width: 35px;
+	background: url('../../images/qbot_icon1.png');	
+	background-size: 35px 35px;
+	max-width: 65vw;
+	float: left;
+	background-repeat: no-repeat;   /*  not too useful as the background size is defined  */
+    background-origin:content-box;
+	margin-left: -70px;   /*   Ziggy face at the left of the bubble    **/
+	margin-top: -5px;
+}
+.left-title{
+	float:left;
+	padding:5px 0;
+	margin:15px 0 15px 20px;
+	color:#124191;
+	font-size:24px;
+	font-family:"Nokia Pure Headline", Helvetica, sans-serif !important;
+}
+.left-title span{
+	font-size:32px;
+}
+.right-title{
+	float: right;
+	width:520px;
+	font-family:"Nokia Pure Headline", Helvetica, sans-serif !important;
+}
+.right-title .to-chat{
+	float: right;
+	font-size:20px;
+	color: #124191 !important;
+	margin:10px 20px 0 0 ;
+	
+}
+.right-title .other-actions{
+	text-align: right;
+	float: right;
+	font-size:20px;
+	margin:5px 20px 0 0 ;
+}
+.other-actions a{
+	color: #124191 !important;
+	font-size:20px;
+}
+.experience-title{
+	width: auto;
+	margin:10px 0 0 20px;
+	font-size: 10pt;
+	font-family:"Nokia Pure Text", Helvetica, sans-serif !important;
+	color: #001135;
+	float: left;
+}
+.experience-title a{
+	font-size: 10pt;
+	font-family:"Nokia Pure Text", Helvetica, sans-serif !important;
+	color: #001135;
+}
+	
+	
+
+	
+

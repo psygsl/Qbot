@@ -1,0 +1,7 @@
+#    syntax :   URLs only, not files, then optional comment after #      no spaces
+#https://nokia.sharepoint.com/sites/kpioffice/Reporting/2017/P05#    example sharepoint
+#https://nokia.sharepoint.com/sites/kpioffice/Quality Documents/Quality KPI Definitions/2017 KPI Defintions#    example sharepoint
+#https://sharenet-ims.int.net.nokia.com/livelink/livelink?func=ll&objId=425832818&objAction=browse&viewType=1#   example sharenet
+#https://sharenet-ims.int.net.nokia.com/livelink/livelink?func=ll&objId=425832830&objAction=browse&viewType=1#   example sharenet
+#https://sharenet-ims.int.net.nokia.com/livelink/livelink?func=ll&objId=425878593&objAction=browse&viewType=1#   example sharenet
+https://nokia.sharepoint.com/sites/CoCaDe_GEPS/SitePages/Home.aspx?RootFolder=%2Fsites%2FCoCaDe_GEPS%2FShared%20Documents%2FGEPS-EMEA%20Transportation%20Segment%20Bootcamp-Level%204&FolderCTID=0x012000FE56067518B88B40A0218143BD492CAF&View={CC3DB142-F97A-45A7-8E33-D4132C92FDC6}

@@ -1,0 +1,209 @@
+<html>
+<head>
+	<title>QBot says Hello</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- stylesheets for bubbles -->
+	<link rel="stylesheet" media="all" href="./component/styles/setup.css">
+	<link rel="stylesheet" media="all" href="./component/styles/says.css">
+	<link rel="stylesheet" media="all" href="./component/styles/reply.css">
+	<link rel="stylesheet" media="all" href="./component/styles/typing.css">
+	<link rel="stylesheet" media="all" href="./component/styles/input.css">
+	<link rel="stylesheet" media="all" href="./component/styles/test.css">
+	<style>
+	
+	</style>
+
+	<!-- the script -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="./component/echarts.min.js"></script>
+	<script src="./component/jquery-3.2.1.min.js"></script>
+    <script src="./component/qbot.api.js"></script>
+    <script src="./component/qbot.kpi.js"></script>
+    <script src="./component/cockpit.js"></script>
+	<script src="./component/Bubbles.js"></script>
+	<script src="./component/polyfill.js"></script>
+
+</head>
+<body>
+<div class="top-title"> 
+	<div class="left-title">
+		<span>Q-Bot | </span> Your one stop for quick answers on quality 
+	</div>
+</div>
+<div class="quality-chat" id="quality-chat"></div>
+<!-- placeholder -->
+<div id="chat"></div>
+<p class="experience-title">Experiencing an issue? Submit a <a href="https://jiradc.int.net.nokia.com/secure/CreateIssue!default.jspa" target="_blank""> < ticket > </a></p>
+<div class="logo" id="logo">
+	<img src="images/nokia.png" class="logo-img">
+</div>
+<div class="suggest-box-outside">
+	<div class="suggest-box">
+		<div class="title">Suggestions</div>
+		<input type="text" class="response-id" style="display:none;" />
+		<textarea class="suggest-content" placeholder="Please write your suggestions."></textarea>
+		<button class="submit-btn">Submit</button>
+		<button class="cancel-btn">Cancel</button>
+	</div>
+</div>
+	<!-- sample conversation structure JSON -->
+	<script>
+		var convo = {
+			"ice": {
+				"says":
+				[
+					"Hi ! I'm <strong>QBot</strong> ",
+					"  Do you have questions on quality? "
+				],
+				"reply": [
+                    {
+                        "question" 	: "Ask me something",	// this is the text label for one of the options
+                        "answer" 		: "ice",
+                    },
+				]
+			},
+		};
+	</script>
+
+	<!-- initialize bubbles -->
+	<script>
+		var givemeBubbles = new Bubbles(document.getElementById("chat"), "givemeBubbles", {
+			inputCallbackFn: function(o){
+			    var callback = function (conv) {
+			        r_conv = conv['convo']
+					intent = conv['intent']
+					dialogState = conv['dialogState']
+					category = conv['category']
+					//alert(intent)
+					switch (intent)
+					{
+						case 'delv':
+						case 'qna':
+                            givemeBubbles.talk(r_conv, category, stripped_answer,dialogState);
+							break;
+						case 'task':
+						case 'kpi':
+						case 'visitor':
+						case 'qnastats':
+						case 'cockpit':
+							givemeBubbles.charting(r_conv,stripped_answer,intent);
+							break;
+						case 'dialog':
+                            givemeBubbles.dialog(r_conv, stripped_answer,dialogState);
+					}
+                }
+				// do this if no answer matched
+				var miss = function(key){
+					kb_convo_v2(o.input, key, callback);
+				}
+
+				// do this if answer found
+				var match = function(key){
+					setTimeout(function(){
+						if(o.match_key=='task' || o.match_key=='kpi' || o.match_key=='cockpit'){
+							givemeBubbles.charting(o.convo, key ,o.match_key);
+						}
+							 // restart current convo from point found in the answer
+						else
+							givemeBubbles.talk(o.convo, key ,o.match_key);
+					}, (600) );
+				}
+
+				var checkAnsCb = function (key) {
+                    // search function
+                    stripped_answer = key['kw']
+                    var found = o.convo[stripped_answer] != null? stripped_answer: false;
+                    found ? match(found) : miss(stripped_answer);
+                }
+				// sanitize text for search function
+				var strip = function(text){
+			        stripe_kw(text, checkAnsCb);
+				}
+
+                stripped_answer = o.input;
+                strip(stripped_answer);
+
+			}
+		});
+		givemeBubbles.talk(convo);
+
+	</script>
+<script>
+function myfunction(){
+	window.open("chat.html", "_blank","toolbar=yes,scrollbars=no,resizable=yes,top=10,left=10,width=600,height=570");
+} 
+</script>
+<script>
+	$('#chat').on('click','.delve_moreInfo_show',function(){
+		if($(this).text()=='More'){
+			$(this).text('Hide');
+			$(this).siblings('.additional_delve_key').show();
+		}
+		else{
+			$(this).text('More');
+			$(this).siblings('.additional_delve_key').hide();
+		}
+	})
+	$('#chat').on('click','.delve_moreResult_show',function(){
+		result = show_delve_more();
+		if(result==0){
+			$(this).remove();
+		}
+	})
+	$('#chat').on('click','.good-btn',function(){
+		question = $('.reply div span[data-reply='+$(this).data('count')+']').text();
+		$.ajax({
+			url:'http://127.0.0.1:5001/v1.0/user_agreetion',
+			type:'get',
+			data:{question:question},
+			success:function(data){
+			},
+			error:function(){
+				alert('get wrong!')
+			}
+		})
+		$(this).children('img').attr('src','images/good-green.png');
+		$(this).siblings('.suggest-btn').hide();
+		$(this).css('pointer-events','none');
+	})
+	$('#chat').on('click','.suggest-btn',function(){
+		$('.suggest-box-outside').show();
+		$('.response-id').text($(this).data('count'));
+	})
+	$('.submit-btn').on('click',function(){
+		question = $('.reply div span[data-reply='+$('.response-id').text()+']').text();
+		suggestion = $(this).siblings('.suggest-content').val();
+		if(suggestion.replace(/\s/g,"")==''){
+			alert('Please write your suggests for Qbot');
+		}
+		else{
+			$.ajax({
+				url:'http://127.0.0.1:5001/v1.0/user_suggestion',
+				type:'get',
+				data:{question:question,suggestion:suggestion},
+				success:function(data){
+				},
+				error:function(){
+					alert('get wrong!')
+				}
+			})
+			$('.suggest-box-outside').hide();
+			$(this).siblings('.suggest-content').text('');
+			$('#chat .suggest-btn[data-count='+$('.response-id').text()+']').html('<img src="images/suggest-green.png" >Thanks for your suggestions');
+			$('#chat .suggest-btn[data-count='+$('.response-id').text()+']').siblings('.good-btn').hide();
+			$('#chat .suggest-btn[data-count='+$('.response-id').text()+']').css('pointer-events','none');
+		}
+	})
+	$('.cancel-btn').on('click',function(){
+		$('.suggest-box-outside').hide();
+		$(this).siblings('.suggest-content').val('');
+	})
+	$('#chat').on('click','.bubble-button',function(){
+		$(this).removeAttr('onclick');
+		$(this).siblings('.bubble-button').remove();
+		$(this).siblings('.delve_moreResult_show').remove();
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>QBot says Hello</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" >
+	<!-- stylesheets for bubbles -->
+	<link rel="stylesheet" media="all" href="./component/styles/setup.css">
+	<link rel="stylesheet" media="all" href="./component/styles/says.css">
+	<link rel="stylesheet" media="all" href="./component/styles/reply.css">
+	<link rel="stylesheet" media="all" href="./component/styles/typing.css">
+	<link rel="stylesheet" media="all" href="./component/styles/input.css">
+	<link rel="stylesheet" media="all" href="./component/styles/test.css">
+	<style>
+	
+	</style>
+
+	<!-- the script -->
+	<script src="./component/echarts.min.js"></script>
+	<script src="./component/jquery-3.2.1.min.js"></script>
+    <script src="./component/qbot.api.js"></script>
+    <script src="./component/qbot.kpi.js"></script>
+    <script src="./component/cockpit.js"></script>
+	<script src="./component/Bubbles.js"></script>
+	<script src="./component/polyfill.js"></script>
+		<script>
+		function init(){
+	new SmoothScroll(document,120,12)
+}
+
+function SmoothScroll(target, speed, smooth) {
+	if (target == document)
+		target = (document.documentElement || document.body.parentNode || document.body) // cross browser support for document scrolling
+	var moving = false
+	var pos = target.scrollTop
+	target.addEventListener('mousewheel', scrolled, false)
+	target.addEventListener('DOMMouseScroll', scrolled, false)
+
+	function scrolled(e) {
+		e.preventDefault(); // disable default scrolling
+		var delta = e.delta || e.wheelDelta;
+		if (delta === undefined) {
+			//we are on firefox
+			delta = -e.detail;
+		}
+		delta = Math.max(-1, Math.min(1, delta)) // cap the delta to [-1,1] for cross browser consistency
+
+		pos += -delta * speed
+		pos = Math.max(0, Math.min(pos, target.scrollHeight - target.clientHeight)) // limit scrolling
+
+		if (!moving) update()
+	}
+
+	function update() {
+		moving = true
+		var delta = (pos - target.scrollTop) / smooth
+		target.scrollTop += delta
+		if (Math.abs(delta) > 0.5)
+			requestFrame(update)
+		else
+			moving = false
+	}
+
+	var requestFrame = function() { // requestAnimationFrame cross browser
+		return (
+			window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.oRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function(func) {
+				window.setTimeout(func, 1000 / 50);
+			}
+		);
+	}()
+}
+	</script>
+
+</head><body onload="init()">
+<div class="logo" id="logo">
+<img src="images/nokia.png" class="logo-img">
+</div>
+		<!-- placeholder -->
+	<div id="chat"></div>
+	<!-- sample conversation structure JSON -->
+	<script>
+		var convo = {
+			"ice": {
+				"says":
+				[
+					"Hi",
+					"This is <strong>QBot</strong> &#127911",
+					" You may ask me things about Nokia Quality processes, projects,NCDR/OCDR/Open/Close/Arrival metric. SAFe, Quality MoO... &#127911"
+				],
+				"reply": [
+                    
+				]
+			},
+		};
+	</script>
+
+	<!-- initialize bubbles -->
+	<script>
+		var givemeBubbles = new Bubbles(document.getElementById("chat"), "givemeBubbles", {
+			inputCallbackFn: function(o){
+			    var callback = function (conv) {
+			        r_conv = conv['convo']
+					intent = conv['intent']
+					dialogState = conv['dialogState']
+					//alert(intent)
+					switch (intent)
+					{
+						case 'delv':
+						case 'qna':
+                            givemeBubbles.talk(r_conv, stripped_answer,dialogState);
+							break;
+						case 'task':
+						case 'kpi':
+						case 'visitor':
+						case 'qnastats':
+						case 'cockpit':
+							givemeBubbles.charting(r_conv,stripped_answer,intent);
+							break;
+						case 'dialog':
+                            givemeBubbles.dialog(r_conv, stripped_answer,dialogState);
+					}
+                }
+				// do this if no answer matched
+				var miss = function(key){
+					kb_convo_v2(o.input, key, callback);
+				}
+
+				// do this if answer found
+				var match = function(key){
+					console.log()
+					setTimeout(function(){
+						if(o.match_key=='task' || o.match_key=='kpi' || o.match_key=='cockpit'){
+							console.log(1)
+							givemeBubbles.charting(o.convo, key ,o.match_key);
+						}
+							 // restart current convo from point found in the answer
+						else
+							givemeBubbles.talk(o.convo, key ,o.match_key);
+					}, (600) );
+				}
+
+				var checkAnsCb = function (key) {
+                    // search function
+                    stripped_answer = key['kw']
+                    var found = o.convo[stripped_answer] != null? stripped_answer: false;
+                    found ? match(found) : miss(stripped_answer);
+                }
+				// sanitize text for search function
+				var strip = function(text){
+			        stripe_kw(text, checkAnsCb);
+				}
+
+                stripped_answer = o.input;
+                strip(stripped_answer);
+
+			}
+		});
+		givemeBubbles.talk(convo);
+	</script>
+<script>
+	$('#chat').on('click','.delve_moreInfo_show',function(){
+		if($(this).text()=='More'){
+			$(this).text('Hide');
+			$(this).siblings('.additional_delve_key').show();
+		}
+		else{
+			$(this).text('More');
+			$(this).siblings('.additional_delve_key').hide();
+		}
+	})
+	$('#chat').on('click','.delve_moreResult_show',function(){
+	if($(this).text()=='More'){
+	    $.ajax({
+	        url:'http://127.0.0.1:5001/v1.0/delve_more',
+	        data:{'limit':20},
+	        success:function(){}
+	    })
+	$(this).text('Hide');
+	$(this).siblings('.overTop_answer').show();
+	}
+	else{
+	$(this).text('More');
+	$(this).siblings('.overTop_answer').hide();
+	}
+	})
+
+</script>
+</body>
+</html>

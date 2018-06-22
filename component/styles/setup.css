@@ -1,0 +1,34 @@
+/* setup container styles */
+.bubble-container {
+	background: linear-gradient(145deg, #e5e9f1, #fff);
+	height: 500px;       /*  (Chris)  735 before but you had to scroll  */  
+	max-width: 578px;    /*  (Chris)  850 before but you had to scroll  */  
+	width: 100%;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+}
+.bubble-wrap {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0px;
+	padding: 10px calc(17px + 10px) 0 10px;
+	margin:0 0 80px 0;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translate3d(0, 0, 0);
+}
+/* optional page styles */
+h1 {
+	<img src="nokia.png" alt="">
+	text-align: right;
+	font-weight: 1300;
+	font-size: 4em;
+	margin: .5em auto 0.15em;
+}
+body {
+	font-family: "Nokia Pure Text", Helvetica, sans-serif !important;
+	margin: 0;
+}

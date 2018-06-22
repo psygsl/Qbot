@@ -1,0 +1,114 @@
+/* style user response reply. This is what repeats what user has typed, and also the 2 buttons with URLs */
+.bubble.reply {
+	background: transparent;
+	box-shadow: none;
+	float: right;    /*  left before     put bubble what user types on the right     */
+	position: relative;
+	transform-origin: right top;
+    margin: 8px 0 10px;
+	padding: 0;
+	max-width: 85%;
+}
+.bubble.reply.say {
+/* 
+  min-width: 350px;
+ */
+}
+.bubble.reply .bubble-content {
+	transition: all 200ms;
+}
+.bubble.reply .bubble-content .bubble-button{
+	background-color:#FFFFFF;     /*  Chris :  background color of bubbles with URLs in addition to QBot answer  first version was black rgba(44, 44, 44, 0.67)   */
+	color: #000000;
+	padding: 8px 16px;
+	border-radius: 15px 15px 5px 5px;
+	margin-right: 50px;            /*  Chris was left before    tunes margin of 2 bubbles with URLs   */
+	text-align: center;
+	display: inline-block;
+    float: right;
+	cursor: pointer;
+	transition: all 200ms;
+	text-decoration: none;
+	word-break: normal;
+	animation-duration: 1s;
+	animation-name: animate-reply;
+	animation-play-state: paused;
+	animation-fill-mode: forwards;
+	opacity: 0;
+	transform: translate3d(0px, 0px, 0px);
+}
+@keyframes animate-reply {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+.bubble.reply.say .bubble-content .bubble-button {
+	animation-play-state: running;
+	margin-top: 3px;
+	min-height: 24px;
+	overflow: hidden;
+	box-shadow: 3px 3px 1px grey;     /*   Chris     shadow of 2 boxes after QBot reply  */
+	}
+
+.bubble.reply .bubble-content.bubble-button:first-child {
+	border-radius: 15px 15px 15px 5px;
+}
+.bubble.reply .bubble-content .bubble-button:last-child,
+.bubble.reply .bubble-content .bubble-button.bubble-pick {
+	border-radius: 15px 15px 5px 15px;
+}
+.bubble.reply.bubble-picked .bubble-content .bubble-button {
+	transform: scale(0) translate3d(0px, 0px, 0px);;
+	padding: 0 !important;
+}
+.bubble.reply:not(.bubble-picked)  .bubble-content .bubble-button:hover,
+.bubble.reply .bubble-content .bubble-button.bubble-pick {
+	/*   background: rgba(44, 44, 44, 1);    Chris : bubbles repeating what user typed were black before      */
+	background-color:#094F80;       /*   Chris :   Nokia color background for bubbles repeating what user typed   */
+	color: #FFFFFF;
+	transform: scale(1) translate3d(0px, 0px, 0px);;
+  	padding: 8px 16px;
+  	height: auto;
+}
+	
+/* input fields for bubbles */
+.bubble .bubble-content input {
+	background: linear-gradient(193deg, #1faced, #5592dc 100%) !important;
+	box-shadow: 0.2 0.2px 1px 0px #000, 0 -1px 0 0px rgba(255, 255, 255, 0.38) inset;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.35);
+	border: 0;
+	outline: 0;
+}
+.bubble .bubble-content input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(255,255,255,.5);
+  text-shadow: none;
+}
+.bubble .bubble-content input::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(255,255,255,.5);
+  text-shadow: none;
+}
+.bubble .bubble-content input:read-only {
+	background: linear-gradient(166deg, #48121d, #0d4058 100%) !important;
+}
+.bubble .delve_moreResult_show{
+    height:28px;
+    line-height:28px;
+	cursor:pointer;
+	margin-right: 100px;
+	float: right;
+	color: #001135;
+	background: #FFFFFF;
+	padding: 8px 16px;
+	border-radius: 5px 15px 15px 15px;
+	box-shadow: 3px 3px 1px grey;
+}
+.bubble .delve_moreResult_show:hover{
+    color:#e75946;
+}
+.person-icon{
+	width: 40px !important;
+	height: 40px;
+	background: #fff;
+	float: right;
+	border-radius:10px !important;
+	margin:5px 20px 0 0 !important;
+}
